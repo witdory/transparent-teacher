@@ -14,10 +14,18 @@ kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (5, 5))
 ret, frame = capture.read()
 background = frame.copy()
 
+# 배경 업데이트 비율
+alpha = 0.05
+update_frequency = 1  # 프레임마다 배경 업데이트
+
+frame_count = 0
+
 while True:
     ret, frame = capture.read()
     if frame is None:
         break
+
+    frame_count += 1
 
     # 배경 모델 업데이트 및 포그라운드 마스크 생성
     fgMask = backSub.apply(frame)
@@ -34,8 +42,9 @@ while True:
     mask = fgMask_morph.astype(bool)
     frame[mask] = background[mask]
 
-    # 배경 이미지 업데이트
-    background = cv.addWeighted(background, 0.50, frame, 0.50, 0)
+    # 주기적으로 배경 이미지 업데이트
+    if frame_count % update_frequency == 0:
+        background = cv.addWeighted(background, 1 - alpha, frame, alpha, 0)
 
     # 결과 프레임을 화면에 표시
     cv.imshow('Background Removed Video', frame)
