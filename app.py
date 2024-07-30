@@ -5,7 +5,7 @@ import numpy as np
 backSub = cv.createBackgroundSubtractorKNN()
 
 # 비디오 캡처 객체 생성
-capture = cv.VideoCapture('video3.mp4')
+capture = cv.VideoCapture('./content/video3.mp4')
 
 # 모폴로지 변형을 위한 커널 생성
 kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (5, 5))
@@ -15,7 +15,7 @@ ret, frame = capture.read()
 background = frame.copy()
 
 # 배경 업데이트 비율
-alpha = 0.05
+alpha = 0.2
 update_frequency = 1  # 프레임마다 배경 업데이트
 
 frame_count = 0

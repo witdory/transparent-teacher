@@ -9,7 +9,7 @@ with open('./content/coco.names.txt', 'r') as f:
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 # Read the image
-img = cv2.imread('./content/teacher.png')
+img = cv2.imread('./content/dog.png')
 height, width, channels = img.shape
 
 # Prepare the image for YOLO
